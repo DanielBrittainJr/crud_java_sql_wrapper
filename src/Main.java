@@ -1,10 +1,14 @@
 import UI.UserInterface;
 
 import java.sql.SQLException;
+import java.util.Scanner;
 
 //current working prototype
 public class Main {
     public static void main(String[] args) {
+
+
+
 
         //this is the body of code needed in main for the basic program to run
         UserInterface UI = new UserInterface();

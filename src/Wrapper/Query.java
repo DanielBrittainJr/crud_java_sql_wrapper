@@ -3,38 +3,76 @@ package Wrapper;
 
 public class Query { // here we deal with the query building
 
-    private StringBuilder Query;
+    private StringBuilder query;
 
     public Query select(String[] columns) {
-        Query = new StringBuilder(); //create stringbuilder object
-        Query.append("SELECT "); //begin query with SELECT
+        query = new StringBuilder(); //create stringbuilder object
+        query.append("SELECT "); //begin query with SELECT
         if (columns != null) { //if the array of columns isn't empty
             for (String column : columns) { // for each column in the columns array
-                Query.append(column); // add column to query object
-                Query.append(","); // we add commas to the SELECT statement to keep adding columns
+                query.append(column); // add column to query object
+                query.append(","); // we add commas to the SELECT statement to keep adding columns
             }
-            Query.deleteCharAt(Query.lastIndexOf(",")); //we delete the last comma so the query doesnt error
+            query.deleteCharAt(query.lastIndexOf(",")); //we delete the last comma so the query doesnt error
         } else {
-            Query.append("*"); // if columns are empty then we select all with *
+            query.append("*"); // if columns are empty then we select all with *
         }
         return this;
     }
 
     public Query from(String table) {
-        Query.append(" FROM ");
-        Query.append(table);
+        query.append(" FROM ");
+        query.append(table);
         return this;
     }
 
     public Query where(String condition) {
-        Query.append(" WHERE ");
-        Query.append(condition);
+        query.append(" WHERE ");
+        query.append(condition);
+        return this;
+    }
+
+    public Query delete(String table) {
+        query = new StringBuilder();
+        query.append("DELETE FROM ");
+        query.append(table);
+        return this;
+    }
+
+    public Query update(String table) {
+        query = new StringBuilder();
+        query.append("UPDATE ");
+        query.append(table);
+        query.append(" SET ");
+        return this;
+    }
+
+    public Query insert(String table,String[] columns) {
+        query = new StringBuilder();
+        query.append("INSERT INTO ");
+        query.append(table);
+        query.append(" (" + columns + " )");
+        for(int i =0; i< columns.length; i++) {
+            query.append("?,");
+        }
+        query.deleteCharAt(query.lastIndexOf(","));
+        query.append(")");
+        return this;
+    }
+    
+    public Query values(String[] params) {
+        query.append(" VALUES(");
+        for(int i =0;i<params.length; i++) {
+            query.append("?,");
+        }
+        query.deleteCharAt(query.lastIndexOf(","));
+        query.append(");");
         return this;
     }
 
 
     public String getQuery() {
-        return Query.toString();
+        return query.toString();
     }
 }
 

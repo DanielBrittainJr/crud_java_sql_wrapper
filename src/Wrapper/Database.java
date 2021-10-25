@@ -32,4 +32,12 @@ public class Database { // here we create the connection, grab the queries and t
         return  resultSet;
     }
 
+    public ResultSet insertInto(String table, String[] columns,String[] values) throws SQLException {
+        query = new Query();
+        query.insert(table,columns).values(values);
+        PreparedStatement preparedStatement = connection.prepareStatement(query.getQuery());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return resultSet;
+    }
+
 }
