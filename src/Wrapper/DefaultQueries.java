@@ -8,7 +8,7 @@ public class DefaultQueries {
 
     protected Database database;
 
-    String[] employeeInfoColumns = {;
+    String[] employeeInfoColumns;
 
     //sql query for basic user information
     public void selectBasicInfo(String firstName) throws SQLException{
@@ -27,7 +27,10 @@ public class DefaultQueries {
     public void insertBasicInfo(String[] basicInfo) throws SQLException {
         database = new Database("hris1","root","itunes44");
 
-        ResultSet rs = database.insertInto();
+        ResultSet rs = database.insertInto("hris1",employeeInfoColumns,basicInfo);
+        while(rs.next()) {
+            System.out.println(rs.getString("firstName"));
+        }
 
         }
 
@@ -39,4 +42,4 @@ public class DefaultQueries {
 
 
 
-}
+
